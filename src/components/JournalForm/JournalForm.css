@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wr {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pic {
+  width: 30px;
+}
+
+button {
+  width: 185px;
+}
+
+.string1 {
+  display: flex;
+  gap: 80px;
+}
+
+.string2 {
+  display: flex;
+  gap: 70px;
+}
+
+.date {
+  display: flex;
+  gap: 20px;
+}

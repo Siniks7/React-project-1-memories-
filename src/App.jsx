@@ -1,35 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import CardButton from './components/CardButton/CardButton';
+import Header from './components/Header/Header';
+import JournalAddButton from './components/JournalAddButton/JournalAddButton';
+import JournalForm from './components/JournalForm/JournalForm';
+import JournalItem from './components/JournalItem/JournalItem';
+import JournalList from './components/JournalList/JournalList';
+import Body from './layouts/Body/Body';
+import LeftPanel from './layouts/LeftPanel/LeftPanel';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	
+	const data = [
+		{
+			title: 'Подготовка к обновлению курсов',
+			date: new Date().toLocaleDateString(),
+			text: 'Сегодня провёл весь день за...'
+		},
+		{
+			title: 'Поход в годы',
+			date: new Date(2025, 5, 25).toLocaleDateString(),
+			text: 'Думал, что очень много време...'
+		}
+	];
+	return (	
+		<div className='app'>
+			<LeftPanel>
+				<Header/>
+				<JournalAddButton/>
+				<JournalList>
+					<CardButton>
+						<JournalItem  
+							title = {data[0].title}
+							date = {data[0].date}
+							text = {data[0].text}
+						/>
+					</CardButton>
+					<CardButton>
+						<JournalItem  
+							title = {data[1].title}
+							date = {data[1].date}
+							text = {data[1].text}
+						/>
+					</CardButton>
+				</JournalList>
+			</LeftPanel>
+			<Body>
+				<JournalForm/>
+			</Body>
+		</div>
+	);
 }
 
-export default App
+export default App;
