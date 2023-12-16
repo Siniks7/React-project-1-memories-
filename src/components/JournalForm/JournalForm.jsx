@@ -1,47 +1,57 @@
-import './JournalForm.css';
-import Button from '../Button/Button.jsx';
 
-function JournalForm() {
+// import styles from './JournalForm.module.css';
+import { useState } from 'react';
+import Button from '../Button/Button';
+// import Input from '../Input/Input';
+
+function JournalForm({addItem}) {
+	
+	const [formValidState, setFormValidState] = useState({
+		title: true,
+		text: true,
+		date: true
+	});
+
+	const addJournalItem = (e) => {
+		e.preventDefault();
+		const formData = new FormData(e.target);
+		const props = Object.fromEntries(formData);	
+		let isFormValid = true;
+		if (!props.title?.trim().length) {
+			setFormValidState(state => ({...state, title: false}));
+			
+		} else {
+			setFormValidState(state => ({...state, title: true}));				
+		}
+		if (!props.text?.trim().length) {
+			setFormValidState(state => ({...state, text: false}));		
+		} else {
+			setFormValidState(state => ({...state, text: true}));
+		}
+		if (!props.date) {
+			setFormValidState(state => ({...state, date: false}));			
+		} else {
+			setFormValidState(state => ({...state, date: true}));
+		}
+
+		if (!isFormValid) {
+			return;
+		}
+
+		addItem(props);
+	};
+
 
 	return (
-		<div className='wr'>
-			<div className="wrapper">
-				<h1>Поход в горы</h1>
-				<img className='pic' src="Picture.svg" alt="Picture" />
-			</div>
-			<div className="wrapper1">
-				<div className='string1'>
-					<div className='date'>
-						<img src="Calendar.svg" alt="" />
-						<div>Дата</div>
-					</div>
-					<div>21.06.2022</div>
-				</div>
-				<div className='string2'>
-					<div className='date'>
-						<img   src="Catalog.svg" alt="" />
-						<div>Метки</div>
-					</div>
-					<div>Спорт</div>
-				</div>
-			</div>
-			<main>
-				<p>
-					Горные походы открывают удивительные природные ландшафты, испытывают туристов физически и морально, дают возможность почувствовать себя первопроходцем. У горных походов свои секреты, приобщиться к которым можно только в команде единомышленников и профессионалов. 
-				</p>
-				<p>Различают альпинизм и горный туризм. Если в альпинизме главная цель – покорение вершины, то горный туризм – это длительное путешествие в горах, связанное с прохождением многочисленных препятствий. В нем огромную роль играет физическая подготовка путешественников, их выносливость, способность переносить большие нагрузки и тяжести в условиях высокогорья.
-Поход по горам – это следование определенному, заранее продуманному, маршруту через ущелья, перевалы, долины, ледники, озера и водопады. У каждого маршрута своя степень сложности, подразумевающая преодоление разнообразных трудностей рельефа. Основная же цель в горном походе – не покорение вершин, а преодоление перевалов.</p>
-				<p>Горные походы открывают удивительные природные ландшафты, испытывают туристов физически и морально, дают возможность почувствовать себя первопроходцем. У горных походов свои секреты, приобщиться к которым можно только в команде единомышленников и профессионалов.
-
-Различают альпинизм и горный туризм. Если в альпинизме главная цель – покорение вершины, то горный туризм – это длительное путешествие в горах, связанное с прохождением многочисленных препятствий. В нем огромную роль играет физическая подготовка путешественников, их выносливость, способность переносить большие нагрузки и тяжести в условиях высокогорья.
-Поход по горам – это следование определенному, заранее продуманному, маршруту через ущелья, перевалы, долины, ледники, озера и водопады. У каждого маршрута своя степень сложности, подразумевающая преодоление разнообразных трудностей рельефа. Основная же цель в горном походе – не покорение вершин, а преодоление перевалов.
-
-Большое значение в горном туризме придается бытовому обустройству в походе, ведь все необходимое для жизнеобеспечения группы нужно нести с собой в рюкзаке и вес каждого килограмма ноши на высоте ощущается особенно сильно. Существует множество способов существенно облегчить вес рюкзака и тем самым высвободить силы для перехода.
-				</p>
-			</main>
-			<Button text = 'Сохранить'></Button>
-		</div>
+		<form className='journal-form' onSubmit={addJournalItem}>			
+			<input name="title" type='text' style = {{border: formValidState.title ? undefined: '1px solid red' }} />				
+			<input type='date' name='date' style = {{border: formValidState.date ? undefined: '1px solid red' }} />				
+			<input type='text' id="tag" name='tag' />			
+			<textarea name='text' id='' cols='30' style = {{border: formValidState.text ? undefined: '1px solid red' }} ></textarea>
+			<Button text='Сохранить'></Button>
+		</form>
 	);
 }
 
 export default JournalForm;
+
