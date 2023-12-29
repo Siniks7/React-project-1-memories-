@@ -1,6 +1,5 @@
-import { useState } from 'react';
+// import { useEffect } from 'react';
 import './App.css';
-
 import Header from './components/Header/Header';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 import JournalForm from './components/JournalForm/JournalForm';
@@ -8,33 +7,43 @@ import JournalForm from './components/JournalForm/JournalForm';
 import JournalList from './components/JournalList/JournalList';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
+import { useLocalStorage } from './components/hooks/use-localstorage.hook';
+import { UserContextProvidev } from './context/user.context';
+import { useState } from 'react';
 
-const INITIAL_DATA = [
-	{
-		title: 'Подготовка к обновлению курсов',
-		date: new Date().toLocaleDateString(),
-		text: 'Сегодня провёл весь день за...',
-		id: 1
-	},
-	{
-		title: 'Поход в годы',
-		date: new Date(2025, 5, 25).toLocaleDateString(),
-		text: 'Думал, что очень много време...',
-		id: 2
+
+function mapItems(items) {
+	if (!items) {
+		return [];
 	}
-];
+	return items.map(i => ({
+		...i,
+		date: new Date(i.date)
+	}));
+}
 
 function App() {
 	
-	const [items, setItems] = useState(INITIAL_DATA);
+	const [items, setItems] =  useLocalStorage('data');
+	const [selectedItem, setSelectedItem] = useState(null);
 
 	const addItem = item => {
-		setItems(oldItems => [...oldItems, {
-			text: item.text,
-			title: item.title,
-			date: new Date(item.date).toLocaleDateString(),
-			id: Math.max(...oldItems.map(i => i.id)) + 1
-		}]);
+		if (!item.id) {
+			setItems([...mapItems(items), {
+				...item,
+				date: new Date(item.date),
+				id: items.length > 0 ? Math.max(...items.map(i => i.id)) + 1 : 1
+			}]);
+		} else {
+			setItems([...mapItems(items).map(i => {
+				if (i.id === item.id) {
+					return {
+						...item
+					};
+				}
+				return i;
+			})]);
+		}
 	};
 
 	// const deleteItem = (id) => {
@@ -42,18 +51,20 @@ function App() {
 	// };
 
 	
-	return (	
-		<div className='app'>
-			<LeftPanel>
-				<Header/>
-				<JournalAddButton/>
-				<JournalList items = {items}>				 				
-				</JournalList>
-			</LeftPanel>
-			<Body>
-				<JournalForm addItem = {addItem} />
-			</Body>
-		</div>
+	return (
+		<UserContextProvidev>
+			<div className='app'>
+				<LeftPanel>
+					<Header/>
+					<JournalAddButton/>
+					<JournalList items = {mapItems(items)} setItem = {setSelectedItem} >				 				
+					</JournalList>
+				</LeftPanel>
+				<Body>
+					<JournalForm addItem = {addItem} data = {selectedItem}/>
+				</Body>
+			</div>
+		</UserContextProvidev>	
 	);
 }
 

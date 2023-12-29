@@ -1,7 +1,7 @@
 import './JournalItem.css';
 
 function JournalItem({ title, date, text }) {
-	const formatedDate = date.toString();
+	const formatedDate = date.toLocaleDateString();
 
 	return (
 		<>
