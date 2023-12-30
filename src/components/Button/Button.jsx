@@ -3,7 +3,7 @@ import './Button.css';
 
 function Button({text, onClick}) {
 	return (
-		<button className='button accent' onClick={onClick}>{text}</button>
+		<button className='button accent' type="submit" onClick={onClick}>{text}</button>
 	);
 }
 

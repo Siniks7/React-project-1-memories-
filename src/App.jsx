@@ -46,22 +46,25 @@ function App() {
 		}
 	};
 
-	// const deleteItem = (id) => {
-	// 	setItems([...items.filter(i => i.id !== id)]);
-	// };
-
+	const deleteItem = (id) => {
+		setItems([...items.filter(i => i.id !== id)]);
+	};
+	
+	function clearForm() {
+		setSelectedItem(null);
+	}
 	
 	return (
 		<UserContextProvidev>
 			<div className='app'>
 				<LeftPanel>
 					<Header/>
-					<JournalAddButton/>
+					<JournalAddButton clearForm = {clearForm} />
 					<JournalList items = {mapItems(items)} setItem = {setSelectedItem} >				 				
 					</JournalList>
 				</LeftPanel>
 				<Body>
-					<JournalForm addItem = {addItem} data = {selectedItem}/>
+					<JournalForm addItem = {addItem} data = {selectedItem} onDelete = {deleteItem}/>
 				</Body>
 			</div>
 		</UserContextProvidev>	

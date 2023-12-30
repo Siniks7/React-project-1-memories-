@@ -14,6 +14,11 @@ function JournalList({items, setItem}) {
 			return -1;
 		}
 	};
+	
+	function truncate(str) {
+		return (str.length > 27) ?
+			str.slice(0, 26) + '…' : str;
+	}
 
 	if (items.length === 0)  { 
 		return <p>Записей нет. Добавьте новую запись.</p>;
@@ -25,9 +30,9 @@ function JournalList({items, setItem}) {
 			.map(el => (
 				<CardButton onClick = {() => setItem(el)} key = {el.id}>					
 					<JournalItem  
-						title = {el.title}
+						title = {truncate(el.title)}
 						date = {el.date}
-						text = {el.text}
+						text = {truncate(el.text)}
 					/>
 				</CardButton>
 			))}</>; 

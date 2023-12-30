@@ -4,3 +4,7 @@
   border: 1px solid #323232;
   color: rgb(255, 255, 255);
 }
+
+.select_option {
+  background: rgba(0, 0, 0, 0.329); 
+}

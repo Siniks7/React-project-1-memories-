@@ -15,3 +15,28 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
+::selection {
+  background: gray;
+  color: black;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: gray;
+  color: #eee;
+  text-shadow: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+}
+
+select option {
+  background: rgba(0, 0, 0, 0.705);
+  color: #fff;
+}

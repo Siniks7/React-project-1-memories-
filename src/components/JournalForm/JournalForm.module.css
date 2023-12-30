@@ -9,6 +9,22 @@
   align-items: center;
   gap: 20px;
   min-width: 150px;
+  border-bottom: 1px solid #323232;
+  padding-bottom: 5px;
+}
+
+.button_delete {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  height: 30px;
+  width: 30px;
+}
+
+.button_delete:hover {
+  background: rgb(255, 255, 255, 0.05);
+  border-radius: 50%;
 }
 
 .form-row {
@@ -16,23 +32,31 @@
   align-items: center;
 }
 
+.form-row_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .input {
   border: none;
-  background: rgb(78, 77, 77);
-  font-size: 14px;
+  background: none;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
   font-family: "Source Sans 3", sans-serif;
-  border-bottom: 1px solid #323232;
+  /* border-bottom: 1px solid #323232; */
   width: 100%;
   transition: all 0.4s;
+  color: white;
 }
 
 .input-title {
   border: none;
-  background: rgb(78, 77, 77);
-  font-size: 32px;
+  background: none;
+  font-size: 48px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;

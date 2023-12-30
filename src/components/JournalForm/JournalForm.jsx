@@ -8,7 +8,7 @@ import { UserContext} from '../../context/user.context';
 // import Input from '../Input/Input';
 
 
-function JournalForm({addItem, data}) {
+function JournalForm({addItem, data, onDelete}) {
 	
 	// const [formValidState, setFormValidState] = useState(INITIAL_STATE);
 	const { userId } = useContext(UserContext);
@@ -17,6 +17,8 @@ function JournalForm({addItem, data}) {
 	const textRef = useRef();
 	const [formValidState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
 	const { isValid, isFormReadyToSubmit, values } = formValidState;
+
+
 
 	useEffect(() => {
 		if (!data) {
@@ -39,7 +41,13 @@ function JournalForm({addItem, data}) {
 			break;
 		}
 	}
-	
+
+	const removeItem = () => {
+		onDelete(data.id);
+		dispatchForm({ type: 'CLEAR' });
+		dispatchForm({ type: 'SET_VALUE', payload: { userId }});
+	};
+
 	useEffect(() => {
 		let timerId;
 		if (!isValid.date || !isValid.text || !isValid.title) {
@@ -102,13 +110,15 @@ function JournalForm({addItem, data}) {
 	return (
 		
 		<form className={styles['journal-form']} onSubmit={addJournalItem}>
-			
-			<div><Input name="title" ref={titleRef} isValid = {isValid.title} onChange={onChange} value = {values.title} type='text' appearance = 'title'/></div>	
+			<div className= {styles['form-row_title']}>
+				<Input name="title" ref={titleRef} isValid = {isValid.title} onChange={onChange} value = {values.title} type='text' appearence = 'title'/>
+				{data?.id && <button className={styles['button_delete']} type='button' onClick={removeItem}><img src="/Picture.svg" alt="Кнопка удалить" /></button>}	
+			</div>
 			<div className= {styles['form-row']}>
 				<label htmlFor ="date" className={styles['form-label']}>
 					<img src="/Calendar.svg" alt="Иконка календаря" />
 					<span>Дата</span></label>
-				<Input type='date' ref={dateRef} isValid = {isValid.date}  value = {values.date} onChange={onChange} name='date' id='date' appearance = 'text'/>	
+				<Input type='date' ref={dateRef} isValid = {isValid.date}  value = {values.date ? new Date(values.date).toISOString().slice(0,10): ''} onChange={onChange} name='date' id='date' appearance = 'text'/>	
 			</div>						
 			<div className= {styles['form-row']}>
 				<label htmlFor ="tag" className={styles['form-label']}>
@@ -116,7 +126,7 @@ function JournalForm({addItem, data}) {
 					<span>Метки</span></label>
 				<Input type='text' ref={textRef}  onChange={onChange} value = {values.tag} id="tag" name='tag' appearance = 'text'/>		
 			</div>							
-			<textarea name='text' id='' onChange={onChange} value = {values.text} cols='30' rows='10' className={`${styles['input']} ${isValid.text ? '' : styles['invalid']}`} ></textarea>
+			<textarea name='text' id='' onChange={onChange} value = {values.text} cols='30' rows='14' className={`${styles['input']} ${isValid.text ? '' : styles['invalid']}`} ></textarea>
 			<Button text='Сохранить' ></Button>		
 		</form>	
 	);

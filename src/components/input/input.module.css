@@ -1,7 +1,7 @@
 .input {
   border: none;
-  background: rgb(78, 77, 77);
-  font-size: 14px;
+  background: none;
+  font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -9,18 +9,20 @@
   border-bottom: 1px solid #323232;
   width: 100%;
   transition: all 0.4s;
+  color: white;
 }
 
 .input-title {
   border: none;
-  background: rgb(78, 77, 77);
-  font-size: 32px;
+  background: none;
+  font-size: 40px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
   font-family: "Source Sans 3", sans-serif;
-  border-bottom: 1px solid #323232;
+  /* border-bottom: 1px solid #323232; */
   width: 100%;
+  color: white;
 }
 
 .invalid {
